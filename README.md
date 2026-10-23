@@ -31,7 +31,42 @@
 6.	Compile the lex program with lex compiler to produce output file as lex.yy.c. eg $ lex filename.l $ cc lex.yy.c
 7.	Compile that file with C compiler and verify the output.
 
+# PROGRAM
+
+```
+%{
+#include <stdio.h>
+%}
+
+%option noyywrap
+
+%%
+"int"|"float"|"char"|"if"|"else"|"while"|"return" { printf("Keyword: %s\n", yytext); }
+[a-zA-Z_][a-zA-Z0-9_]* { printf("Identifier: %s\n", yytext); }
+[0-9]+ { printf("Number: %s\n", yytext); }
+[+\-*/=] { printf("Operator: %s\n", yytext); }
+[;(),{}] { printf("Special Symbol: %s\n", yytext); }
+[ \t\n]+ ;
+. { printf("Unknown: %s\n", yytext); }
+%%
+
+int main()
+{
+    printf("Enter input:\n");
+    yylex();
+    return 0;
+}
+```
+
 # INPUT
+
+```
+int a = 10; int b=20; float c=45.5;
+```
+
 # OUTPUT
+
+<img width="1907" height="1012" alt="image" src="https://github.com/user-attachments/assets/ebdbd1e9-22f4-4dce-be85-9c4917e3b1ce" />
+
 # RESULT
 ## The lexical analyzer is implemented using lex and the output is verified.
